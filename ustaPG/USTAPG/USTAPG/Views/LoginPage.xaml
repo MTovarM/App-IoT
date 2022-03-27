@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="USTAPG.Views.LoginPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Login">
+    <ContentPage.Content>
+        <ScrollView
+            BindingContext="{Binding Login}">
+            <StackLayout
+                Padding="15">
+                <Grid
+                    VerticalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="40"
+                        FontAttributes="Bold"
+                        Text="Hola" 
+                        HorizontalOptions="CenterAndExpand">
+                    </Label>
+                    <Image
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        WidthRequest="260"
+                        Source="Logo">
+                    </Image>
+                </Grid>
+                <Label
+                    Text="Por favor, ingresa a tu cuenta" 
+                    HorizontalOptions="CenterAndExpand">
+                </Label>
+                <Entry
+                    Text="{Binding Correo, Mode=TwoWay}"
+                    Margin="12,0,12,0"
+                    Keyboard="Email"
+                    Placeholder="Correo">
+                </Entry>
+                <Entry
+                    Text="{Binding Clave, Mode=TwoWay}"
+                    Margin="12,0,12,0"
+                    IsPassword="True"
+                    Placeholder="Contraseña">
+                </Entry>
+                <StackLayout
+                    VerticalOptions="CenterAndExpand"
+                    Orientation="Horizontal"
+                    Margin="12,0,12,0">
+                    <Label
+                        FontSize="16"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="Center"
+                        Text="Recordar ususario">
+                    </Label>
+                    <Switch
+                        IsToggled="{Binding Recordar, Mode=TwoWay}"
+                        HorizontalOptions="End">
+                    </Switch>
+                </StackLayout>
+                <Label
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="Center"
+                    TextColor="#999105"
+                    Text="¿Olvidaste tu contraseña?">
+                </Label>
+                <ActivityIndicator
+                    IsRunning="{Binding Iniciado, Mode=TwoWay}"
+                    VerticalOptions="CenterAndExpand">
+                </ActivityIndicator>
+                <StackLayout
+                    VerticalOptions="EndAndExpand"
+                    Margin="25">
+                    <Button
+                        Command="{Binding EntrarCommand}"
+                        IsEnabled="{Binding Habilitado, Mode=TwoWay}"
+                        BackgroundColor="#E9AB15"
+                        BorderRadius="23"
+                        HeightRequest="46"
+                        Text="Entrar">
+                    </Button>
+                    <Button
+                        IsEnabled="{Binding Habilitado, Mode=TwoWay}"
+                        Command="{Binding RegistrarCommand}"
+                        BackgroundColor="#F7DE6E"
+                        BorderRadius="23"
+                        Text="Registrarse">
+                    </Button>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
