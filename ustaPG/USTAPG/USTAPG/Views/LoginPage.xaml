@@ -7,9 +7,8 @@
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Login}">
-            <StackLayout
-                Padding="15">
-                <Grid
+            <StackLayout>
+                <!-- <Grid
                     VerticalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -29,66 +28,73 @@
                         WidthRequest="260"
                         Source="Logo">
                     </Image>
-                </Grid>
-                <Label
-                    Text="Por favor, ingresa a tu cuenta" 
-                    HorizontalOptions="CenterAndExpand">
-                </Label>
-                <Entry
-                    Text="{Binding Correo, Mode=TwoWay}"
-                    Margin="12,0,12,0"
-                    Keyboard="Email"
-                    Placeholder="Correo">
-                </Entry>
-                <Entry
-                    Text="{Binding Clave, Mode=TwoWay}"
-                    Margin="12,0,12,0"
-                    IsPassword="True"
-                    Placeholder="Contraseña">
-                </Entry>
+                </Grid> -->
+                <Image
+                    WidthRequest="600"
+                    Source="Login">
+                </Image>
                 <StackLayout
-                    VerticalOptions="CenterAndExpand"
-                    Orientation="Horizontal"
-                    Margin="12,0,12,0">
+                    Padding="15">
                     <Label
-                        FontSize="16"
-                        HorizontalOptions="StartAndExpand"
-                        VerticalOptions="Center"
-                        Text="Recordar ususario">
+                        Text="Por favor, ingresa a tu cuenta" 
+                        HorizontalOptions="CenterAndExpand">
                     </Label>
-                    <Switch
-                        IsToggled="{Binding Recordar, Mode=TwoWay}"
-                        HorizontalOptions="End">
-                    </Switch>
-                </StackLayout>
-                <Label
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="Center"
-                    TextColor="#999105"
-                    Text="¿Olvidaste tu contraseña?">
-                </Label>
-                <ActivityIndicator
-                    IsRunning="{Binding Iniciado, Mode=TwoWay}"
-                    VerticalOptions="CenterAndExpand">
-                </ActivityIndicator>
-                <StackLayout
-                    VerticalOptions="EndAndExpand"
-                    Margin="25">
-                    <Button
-                        Command="{Binding EntrarCommand}"
-                        IsEnabled="{Binding Habilitado, Mode=TwoWay}"
-                        BackgroundColor="#E9AB15"
-                        BorderRadius="23"
-                        HeightRequest="46"
-                        Text="Entrar">
-                    </Button>
-                    <Button
-                        IsEnabled="{Binding Habilitado, Mode=TwoWay}"
-                        Command="{Binding RegistrarCommand}"
-                        BackgroundColor="#F7DE6E"
-                        BorderRadius="23"
-                        Text="Registrarse">
-                    </Button>
+                    <Entry
+                        Text="{Binding Correo, Mode=TwoWay}"
+                        Margin="12,0,12,0"
+                        Keyboard="Email"
+                        Placeholder="Correo">
+                    </Entry>
+                    <Entry
+                        Text="{Binding Clave, Mode=TwoWay}"
+                        Margin="12,0,12,0"
+                        IsPassword="True"
+                        Placeholder="Contraseña">
+                    </Entry>
+                    <StackLayout
+                        VerticalOptions="CenterAndExpand"
+                        Orientation="Horizontal"
+                        Margin="12,0,12,0">
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="StartAndExpand"
+                            VerticalOptions="Center"
+                            Text="Recordar ususario">
+                        </Label>
+                        <Switch
+                            IsToggled="{Binding Recordar, Mode=TwoWay}"
+                            HorizontalOptions="End">
+                        </Switch>
+                    </StackLayout>
+                    <Label
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="Center"
+                        TextColor="#999105"
+                        Text="¿Olvidaste tu contraseña?">
+                    </Label>
+                    <ActivityIndicator
+                        IsRunning="{Binding Iniciado, Mode=TwoWay}"
+                        VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
+                    <StackLayout
+                        VerticalOptions="EndAndExpand"
+                        Margin="25">
+                        <Button
+                            Command="{Binding EntrarCommand}"
+                            IsEnabled="{Binding Habilitado, Mode=TwoWay}"
+                            BackgroundColor="#E9AB15"
+                            BorderRadius="23"
+                            HeightRequest="46"
+                            Text="Entrar">
+                        </Button>
+                        <Button
+                            IsEnabled="{Binding Habilitado, Mode=TwoWay}"
+                            Command="{Binding RegistrarCommand}"
+                            BackgroundColor="#F7DE6E"
+                            BorderRadius="23"
+                            Text="Registrarse">
+                        </Button>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

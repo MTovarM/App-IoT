@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             x:Class="USTAPG.Views.MACPage"
+             Title="MAC">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding MacMainPage}">
+            <Image
+                WidthRequest="600"
+                Source="MAC">
+            </Image>
+            <StackLayout
+                Padding="29">
+                <Grid VerticalOptions="CenterAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="15"
+                        TextColor="Black"
+                        Text="Dinos cual el la dirección de tu dispositivo"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand">
+                    </Label>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Command="{Binding MacQr}"
+                        VerticalOptions="CenterAndExpand"
+                        IsEnabled="{Binding Habilitado, Mode=TwoWay}"
+                        BackgroundColor="#E9AB15"
+                        BorderRadius="23"
+                        HeightRequest="46"
+                        Text="Escanear Qr">
+                    </Button>
+                    <ActivityIndicator
+                        IsRunning="{Binding Iniciado, Mode=TwoWay}"
+                        VerticalOptions="CenterAndExpand">
+                    </ActivityIndicator>
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

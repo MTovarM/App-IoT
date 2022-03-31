@@ -8,8 +8,8 @@
         #region Constructor
         public App()
         {
+            Device.SetFlags(new[] { "RadioButton_Experimental" });
             InitializeComponent();
-
             MainPage = new NavigationPage(new LoginPage());
         }
         #endregion

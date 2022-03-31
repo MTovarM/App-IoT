@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="USTAPG.Views.MeterPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             xmlns:Grafica="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             Icon="meter"
+             Title="Medidor">
+    <ContentPage.Content>
+        <ScrollView
+            Padding="0,15,0,0"
+            BindingContext="{Binding Meter}">
+            <StackLayout>
+                <Label Text="Meter"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+                <Grafica:ChartView 
+                    x:Name="hola" 
+                    HeightRequest="220" 
+                    Chart="{Binding Grap}">
+                </Grafica:ChartView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
