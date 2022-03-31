@@ -19,6 +19,7 @@ namespace USTAPG.UWP
     {
         public MainPage()
         {
+            //Syncfusion.SfChart.UWP.SfChartRenderer.Init();
             this.InitializeComponent();
 
             LoadApplication(new USTAPG.App());
