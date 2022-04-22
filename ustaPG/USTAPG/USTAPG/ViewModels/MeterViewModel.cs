@@ -192,6 +192,12 @@
                 S1.Add(M.Servicio1);
                 S2.Add(M.Servicio2);
                 S3.Add(M.Servicio3);
+                //this.Gra1X.Add(M.Servicio1.Date);
+                //this.Gra2X.Add(M.Servicio2.Date);
+                //this.Gra3X.Add(M.Servicio3.Date);
+                //this.Gra1Y.Add(M.Servicio1.Value);
+                //this.Gra2Y.Add(M.Servicio2.Value);
+                //this.Gra3Y.Add(M.Servicio3.Value);
             }
             List<ChartEntry> Gra1entry = new List<ChartEntry>();
             for (int i = 0; i < Gra1X.Count; i++)
@@ -222,8 +228,8 @@
             float _sum = 0;
             float _average = 0;
             for(int i = _diaMes.Count; i > 0; i--)
-            {
-                var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
+                {
+                    var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
                 if (li.Count != 0)
                 {
                     foreach (var it in li)
