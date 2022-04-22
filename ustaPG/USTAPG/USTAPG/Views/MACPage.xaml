@@ -33,8 +33,9 @@
                         Command="{Binding MacQr}"
                         VerticalOptions="CenterAndExpand"
                         IsEnabled="{Binding Habilitado, Mode=TwoWay}"
-                        BackgroundColor="#E9AB15"
+                        BackgroundColor="#1D56FF"
                         BorderRadius="23"
+                        TextColor="#FFFFFF"
                         HeightRequest="46"
                         Text="Escanear Qr">
                     </Button>

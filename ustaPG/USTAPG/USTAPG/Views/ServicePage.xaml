@@ -40,14 +40,16 @@
                         Padding="0,0,20,0"
                         Text="Ver por:"></Label>
                     <RadioButton HorizontalOptions="End"
-                                 IsChecked="{Binding Mes,Mode=TwoWay}"/>
+                                 IsChecked="{Binding Mes,Mode=TwoWay}"
+                                 Command="{Binding RadioButtonCommand}"/>
                     <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="End"
                         Text="Mes"></Label>
                     <RadioButton HorizontalOptions="End"
-                                 IsChecked="{Binding Dia,Mode=TwoWay}"/>
+                                 IsChecked="{Binding Dia,Mode=TwoWay}"
+                                 Command="{Binding RadioButtonCommand}"/>
                     <Label
                         TextColor="#000"
                         Padding="0,0,10,0"
@@ -55,14 +57,16 @@
                         HorizontalOptions="End"
                         Text="Día"></Label>
                     <RadioButton HorizontalOptions="End"
-                                 IsChecked="{Binding Hora,Mode=TwoWay}"/>
+                                 IsChecked="{Binding Hora,Mode=TwoWay}"
+                                 Command="{Binding RadioButtonCommand}"/>
                     <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="End"
                         Text="Hora"></Label>
                 </StackLayout>
-                <Grafica:ChartView 
+                <Grafica:ChartView
+                    BackgroundColor="#1D56FF"
                     VerticalOptions="StartAndExpand" 
                     x:Name="g1" 
                     HeightRequest="220" 

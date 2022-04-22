@@ -8,27 +8,6 @@
         <ScrollView
             BindingContext="{Binding Login}">
             <StackLayout>
-                <!-- <Grid
-                    VerticalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label 
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        FontSize="40"
-                        FontAttributes="Bold"
-                        Text="Hola" 
-                        HorizontalOptions="CenterAndExpand">
-                    </Label>
-                    <Image
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        WidthRequest="260"
-                        Source="Logo">
-                    </Image>
-                </Grid> -->
                 <Image
                     WidthRequest="600"
                     Source="Login">
@@ -69,7 +48,7 @@
                     <Label
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="Center"
-                        TextColor="#999105"
+                        TextColor="#507CFF"
                         Text="¿Olvidaste tu contraseña?">
                     </Label>
                     <ActivityIndicator
@@ -82,18 +61,19 @@
                         <Button
                             Command="{Binding EntrarCommand}"
                             IsEnabled="{Binding Habilitado, Mode=TwoWay}"
-                            BackgroundColor="#E9AB15"
+                            BackgroundColor="#1D56FF"
+                            TextColor="#FFFFFF"
                             BorderRadius="23"
                             HeightRequest="46"
                             Text="Entrar">
                         </Button>
-                        <Button
+                        <!--<Button
                             IsEnabled="{Binding Habilitado, Mode=TwoWay}"
                             Command="{Binding RegistrarCommand}"
                             BackgroundColor="#F7DE6E"
                             BorderRadius="23"
                             Text="Registrarse">
-                        </Button>
+                        </Button>-->
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

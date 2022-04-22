@@ -1,10 +1,12 @@
 ﻿namespace USTAPG.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
     using Microcharts;
     using SkiaSharp;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Input;
     using USTAPG.Models;
 
     public class MeterViewModel : BaseViewModel
@@ -32,6 +34,7 @@
         #endregion
 
         #region Propiedades
+        public string[] Meses { get; set; }
         public List<Servicio> S1 { get; set; }
         public List<Servicio> S2 { get; set; }
         public List<Servicio> S3 { get; set; }
@@ -143,6 +146,16 @@
         }
         #endregion
 
+        #region Comandos
+        public ICommand RadioButtonCommand
+        {
+            get
+            {
+                return new RelayCommand(RevisarRadioButton);
+            }
+        }
+        #endregion
+
         #region Constructor
         public MeterViewModel()
         {
@@ -164,9 +177,6 @@
             this.S1 = new List<Servicio>();
             this.S2 = new List<Servicio>();
             this.S3 = new List<Servicio>();
-            this.Dia = true;
-            this.Hora = false;
-            this.Mes = false;
             this.Gra1X = new List<string>();
             this.Gra2X = new List<string>();
             this.Gra3X = new List<string>();
@@ -175,46 +185,35 @@
             this.Gra3Y = new List<float>();
             DateTime Today = DateTime.Today;
             var split = Today.ToString("d").Split('/');
-            string[] meses = new string[12] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep",
+            Meses = new string[12] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep",
             "Oct", "Nov", "Dic"};
             AcDia = split[0];
-            AcMes = meses[Convert.ToInt32(split[1]) - 1];
+            AcMes = Meses[Convert.ToInt32(split[1]) - 1];
             AcAnio = split[2];
-            Graficar();
-        }
-        #endregion
-
-        #region Metodos
-        public void Graficar()
-        {
             foreach (var M in this.Measure)
             {
                 S1.Add(M.Servicio1);
                 S2.Add(M.Servicio2);
                 S3.Add(M.Servicio3);
             }
-            List<ChartEntry> Gra1entry = new List<ChartEntry>();
-            for (int i = 0; i < Gra1X.Count; i++)
-            {
-                Gra1entry.Add(new ChartEntry(Gra1Y[i]) {
-                    Label = this.Gra1X[i],
-                    ValueLabel = this.Gra1Y[i].ToString(),
-                    Color = SKColor.Parse("#F9A825")
-                });
-            }
-            var v = OrganizarDia(1).OrderBy(o => o.Label);
-            //this.Gra1 = new BarChart() { Entries = Gra1entry };
-            this.Gra1 = new BarChart() { Entries = v };
+            this.Hora = true;
+            this.Dia = false;
+            this.Mes = false;
         }
+        #endregion
 
-        public List<ChartEntry> OrganizarDia(int _NumService)
+        #region Metodos
+        public List<ChartEntry> OrganizarHora(int _NumService)
         {
+            //Nececito los tres: Dia, mes y año
+            AcMes = "May";
+            AcDia = "27";
+            //-----------------------------------
+
             List<Servicio> _temp = new List<Servicio>();
             if (_NumService == 1) _temp = S1;
             else if (_NumService == 2) _temp = S2;
             else _temp = S3;
-            AcMes = "May";
-            AcDia = "27";
             var _diaMes = _temp.Where(m => m.Date.ToLower().Contains(AcDia + "/" + AcMes.ToLower() + "/" + AcAnio)).ToList();
             List<ChartEntry> Gra1entry = new List<ChartEntry>();
             int _hours = 23;
@@ -231,21 +230,160 @@
                         _sum += it.Value;
                         _count++;
                     }
-                    _average = _sum / _count;
-                    Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
+                    try
                     {
-                        Label = _hours.ToString() + ":00",
-                        ValueLabel = _average.ToString(),
-                        Color = SKColor.Parse("#F9A825")
-                    });
-                    _diaMes.RemoveAll(a => a.Date.Contains(_hours + ":"));
+                        _average = _sum / _count;
+                        Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
+                        {
+                            Label = _hours.ToString() + ":00",
+                            ValueLabel = _average.ToString(),
+                            Color = SKColor.Parse("#FFFFFF")
+                        });
+                        _diaMes.RemoveAll(a => a.Date.Contains(_hours + ":"));
+                    }
+                    catch (Exception)
+                    { }
                     _hours--;
-                    _average = 0;
-                    _count = 0;
                     _sum = 0;
+                    _count = 0;
+                    _average = 0;
                 }
             }
             return Gra1entry;
+        }
+
+        public List<ChartEntry> OrganizarDia(int _NumService)
+        {
+            //Necesito dos: mes y año
+            AcMes = "May";
+            //---------------------------------
+
+            List<Servicio> _temp = new List<Servicio>();
+            if (_NumService == 1) _temp = S1;
+            else if (_NumService == 2) _temp = S2;
+            else _temp = S3;
+            List<ChartEntry> Gra1entry = new List<ChartEntry>();
+            var Mes = _temp.Where(m => m.Date.ToLower().Contains(AcMes.ToLower() + "/" + AcAnio)).ToList();
+            var Dias = Mes.GroupBy(g => {
+                int In = g.Date.IndexOf(" ");
+                return g.Date.Substring(In);
+            }).ToList();
+            int _count = 0;
+            float _sum = 0;
+            float _average = 0;
+            foreach (var D in Dias)
+            {
+                foreach (var H in D)
+                {
+                    _sum += H.Value;
+                    _count++;
+                }
+                try
+                {
+                    _average = _sum / _count;
+                    Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
+                    {
+                        Label = D.Key,
+                        ValueLabel = _average.ToString(),
+                        Color = SKColor.Parse("#FFFFFF")
+                    });
+                }
+                catch (Exception)
+                { }
+                _sum = 0;
+                _count = 0;
+                _average = 0;
+            }
+            return Gra1entry;
+        }
+
+        public List<ChartEntry> OrganizarMes(int _NumService)
+        {
+            //Necesito solo el año
+            //---------------------------------
+
+            List<Servicio> _temp = new List<Servicio>();
+            if (_NumService == 1) _temp = S1;
+            else if (_NumService == 2) _temp = S2;
+            else _temp = S3;
+            var _meses = _temp.Where(m => m.Date.ToLower().Contains(AcAnio)).ToList();
+            List<ChartEntry> Gra1entry = new List<ChartEntry>();
+            int _count = 0;
+            float _sum = 0;
+            float _average = 0;
+            foreach (var M in Meses)
+            {
+                var Mes = _meses.Where(h => h.Date.Contains(M)).ToList();
+                foreach (var MM in Mes)
+                {
+                    _sum += MM.Value;
+                    _count++;
+                }
+                try
+                {
+                    _average = _sum / _count;
+                    Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
+                    {
+                        Label = M,
+                        ValueLabel = _average.ToString(),
+                        Color = SKColor.Parse("#FFFFFF")
+                    });
+                }
+                catch (Exception)
+                { }
+                _sum = 0;
+                _count = 0;
+                _average = 0;
+            }
+            return Gra1entry;
+        }
+
+        private void RevisarRadioButton()
+        {
+            if (this.Mes)
+            {
+                var GMes1 = OrganizarMes(1).ToList();
+                var GMes2 = OrganizarMes(2).ToList();
+                var GMes3 = OrganizarMes(3).ToList();
+                this.Gra1 = new BarChart() { Entries = GMes1, 
+                    LabelColor = SKColor.Parse("#FFFF"), 
+                    LabelTextSize = 34,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    BackgroundColor = SKColor.Parse("#1D56FF")};
+                this.Gra2 = new BarChart() { Entries = GMes2 };
+                this.Gra3 = new BarChart() { Entries = GMes3 };
+            }
+            else if (this.Hora)
+            {
+                var GHora1 = OrganizarHora(1).OrderBy(o => o.Label).ToList();
+                var GHora2 = OrganizarHora(2).OrderBy(o => o.Label).ToList();
+                var GHora3 = OrganizarHora(3).OrderBy(o => o.Label).ToList();
+                GHora1.Reverse();
+                GHora3.Reverse();
+                GHora2.Reverse();
+                this.Gra1 = new BarChart() { Entries = GHora1,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
+                this.Gra2 = new BarChart() { Entries = GHora2 };
+                this.Gra3 = new BarChart() { Entries = GHora3 };
+            }
+            else if(this.Dia)
+            {
+                var GDia1 = OrganizarDia(1).ToList();
+                var GDia2 = OrganizarDia(2).ToList();
+                var GDia3 = OrganizarDia(3).ToList();
+                this.Gra1 = new BarChart() { Entries = GDia1,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
+                this.Gra2 = new BarChart() { Entries = GDia2 };
+                this.Gra3 = new BarChart() { Entries = GDia3 };
+            }
         }
 
         public string ObtenerEstado(int _status)
