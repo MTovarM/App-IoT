@@ -221,8 +221,8 @@
             float _sum = 0;
             float _average = 0;
             for(int i = _diaMes.Count; i > 0; i--)
-            {
-                var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
+                {
+                    var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
                 if (li.Count != 0)
                 {
                     foreach (var it in li)
