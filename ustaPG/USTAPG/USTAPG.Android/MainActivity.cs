@@ -24,7 +24,7 @@ namespace USTAPG.Droid
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             ZXing.Mobile.MobileBarcodeScanner.Initialize(Application);
             LoadApplication(new App());
-            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#E9AB15"));
+            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#1D56FF"));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

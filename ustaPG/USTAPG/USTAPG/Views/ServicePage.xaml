@@ -8,129 +8,137 @@
              Title="Electricidad">
     <ContentPage.Content>
         <ScrollView
-            Padding="0,15,0,0"
             BindingContext="{Binding Meter}">
-            <StackLayout
-                Padding="15">
+            <StackLayout>
                 <StackLayout
+                    Padding="15,15,0,0"
+                    BackgroundColor="#1D56FF">
+                    <StackLayout
+                    
                     Orientation="Horizontal"
                     Padding="25,0,40,0">
-                    <Label
-                        TextColor="#000"
+                        <Label
+                        TextColor="#FFF"
                         FontAttributes="Bold"
                         FontSize="30"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="StartAndExpand"
                         Text="ESTADO"></Label>
-                    <Label
-                        TextColor="#000"
+                        <Label
+                        TextColor="#FFF"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="EndAndExpand"
                         FontSize="30"
                         Text="{Binding EstadoS1,Mode=TwoWay}"></Label>
-                </StackLayout>
-                <StackLayout
+                    </StackLayout>
+                    <StackLayout
+                    BackgroundColor="#1D56FF"
                     Orientation="Horizontal"
                     VerticalOptions="StartAndExpand" 
                     HorizontalOptions="End"
                     Padding="0,0,20,0">
-                    <Label
-                        TextColor="#000"
+                        <Label
+                        TextColor="#FFF"
                         VerticalOptions="CenterAndExpand"
                         Padding="0,0,20,0"
                         Text="Ver por:"></Label>
-                    <RadioButton HorizontalOptions="End"
+                        <RadioButton HorizontalOptions="End"
+                                 
                                  IsChecked="{Binding Mes,Mode=TwoWay}"
-                                 Command="{Binding RadioButtonCommand}"/>
-                    <Label
-                        TextColor="#000"
+                                 Command="{Binding RadioButtonCommand}" Text=""/>
+                        <Label
+                        TextColor="#FFF"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="End"
                         Text="Mes"></Label>
-                    <RadioButton HorizontalOptions="End"
+                        <RadioButton HorizontalOptions="End"
                                  IsChecked="{Binding Dia,Mode=TwoWay}"
                                  Command="{Binding RadioButtonCommand}"/>
-                    <Label
-                        TextColor="#000"
+                        <Label
+                        TextColor="#FFF"
                         Padding="0,0,10,0"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="End"
                         Text="Día"></Label>
-                    <RadioButton HorizontalOptions="End"
+                        <RadioButton HorizontalOptions="End"
                                  IsChecked="{Binding Hora,Mode=TwoWay}"
                                  Command="{Binding RadioButtonCommand}"/>
-                    <Label
-                        TextColor="#000"
+                        <Label
+                        TextColor="#FFF"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="End"
                         Text="Hora"></Label>
+                    </StackLayout>
+                    <Grafica:ChartView
+                        BackgroundColor="#1D56FF"
+                        VerticalOptions="StartAndExpand" 
+                        x:Name="g1" 
+                        HeightRequest="220" 
+                        Chart="{Binding Gra1}">
+                    </Grafica:ChartView>
                 </StackLayout>
-                <Grafica:ChartView
-                    BackgroundColor="#1D56FF"
-                    VerticalOptions="StartAndExpand" 
-                    x:Name="g1" 
-                    HeightRequest="220" 
-                    Chart="{Binding Gra1}">
-                </Grafica:ChartView>
                 <StackLayout
+                    Padding="15,5,0,0">
+                    <StackLayout
                     Orientation="Horizontal"
                     Padding="50,0,40,0">
-                    <Label
-                        TextColor="#000"
-                        FontAttributes="Bold"
-                        VerticalOptions="CenterAndExpand"
-                        HorizontalOptions="StartAndExpand"
-                        Text="Estrato: "></Label>
-                    <Label
+                        <Label
+                            TextColor="#000"
+                            FontAttributes="Bold"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Estrato: "></Label>
+                        <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="EndAndExpand"
                         Text="{Binding Estrato,Mode=TwoWay}"></Label>
-                </StackLayout>
-                <StackLayout
+                    </StackLayout>
+                    <StackLayout
                     Orientation="Horizontal"
                     Padding="50,0,40,0">
-                    <Label
+                        <Label
                         TextColor="#000"
                         FontAttributes="Bold"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="StartAndExpand"
                         Text="Tarifa (COP por kWh): "></Label>
-                    <Label
+                        <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="EndAndExpand"
                         Text="{Binding TarifaS1,Mode=TwoWay}"></Label>
-                </StackLayout>
-                <StackLayout
+                    </StackLayout>
+                    <StackLayout
                     Orientation="Horizontal"
                     Padding="50,0,40,0">
-                    <Label
+                        <Label
                         TextColor="#000"
                         FontAttributes="Bold"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="StartAndExpand"
                         Text="Aproximado siguiente mes: "></Label>
-                    <Label
+                        <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="EndAndExpand"
                         Text="{Binding AproximadoS1,Mode=TwoWay}"></Label>
-                </StackLayout>
-                <StackLayout
+                    </StackLayout>
+                    <StackLayout
                     Orientation="Horizontal"
                     Padding="50,0,40,0">
-                    <Label
+                        <Label
                         TextColor="#000"
                         FontAttributes="Bold"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="StartAndExpand"
                         Text="Fecha de facturación: "></Label>
-                    <Label
+                        <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="EndAndExpand"
                         Text="{Binding FechaFacS1,Mode=TwoWay}"></Label>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

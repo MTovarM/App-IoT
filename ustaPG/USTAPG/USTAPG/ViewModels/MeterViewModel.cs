@@ -20,17 +20,17 @@
         public bool mes;
         public string estrato;
         public string estadoS1;
-        public float tarifaS1;
-        public float aproximadoS1;
-        public string fechaFacS1;
         public string estadoS2;
-        public float tarifaS2;
-        public float aproximadoS2;
-        public string fechaFacS2;
         public string estadoS3;
-        public float tarifaS3;
-        public float aproximadoS3;
+        public string fechaFacS1;
+        public string fechaFacS2;
         public string fechaFacS3;
+        public string tarifaS3;
+        public string tarifaS1;
+        public string tarifaS2;
+        public string aproximadoS1;
+        public string aproximadoS2;
+        public string aproximadoS3;       
         #endregion
 
         #region Propiedades
@@ -84,66 +84,67 @@
             get { return this.estrato; }
             set { SetValue(ref this.estrato, value); }
         }
-        public string EstadoS1
-        {
-            get { return this.estadoS1; }
-            set { SetValue(ref this.estadoS1, value); }
-        }
-        public float TarifaS1
-        {
-            get { return this.tarifaS1; }
-            set { SetValue(ref this.tarifaS1, value); }
-        }
-        public float AproximadoS1
-        {
-            get { return this.aproximadoS1; }
-            set { SetValue(ref this.aproximadoS1, value); }
-        }
         public string FechaFacS1
         {
             get { return this.fechaFacS1; }
             set { SetValue(ref this.fechaFacS1, value); }
-        }
-        public string EstadoS2
-        {
-            get { return this.estadoS2; }
-            set { SetValue(ref this.estadoS2, value); }
-        }
-        public float TarifaS2
-        {
-            get { return this.tarifaS2; }
-            set { SetValue(ref this.tarifaS2, value); }
-        }
-        public float AproximadoS2
-        {
-            get { return this.aproximadoS2; }
-            set { SetValue(ref this.aproximadoS2, value); }
         }
         public string FechaFacS2
         {
             get { return this.fechaFacS2; }
             set { SetValue(ref this.fechaFacS2, value); }
         }
-        public string EstadoS3
-        {
-            get { return this.estadoS3; }
-            set { SetValue(ref this.estadoS3, value); }
-        }
-        public float TarifaS3
-        {
-            get { return this.tarifaS3; }
-            set { SetValue(ref this.tarifaS3, value); }
-        }
-        public float AproximadoS3
-        {
-            get { return this.aproximadoS3; }
-            set { SetValue(ref this.aproximadoS3, value); }
-        }
         public string FechaFacS3
         {
             get { return this.fechaFacS3; }
             set { SetValue(ref this.fechaFacS3, value); }
         }
+        public string EstadoS1
+        {
+            get { return this.estadoS1; }
+            set { SetValue(ref this.estadoS1, value); }
+        }
+        public string EstadoS2
+        {
+            get { return this.estadoS2; }
+            set { SetValue(ref this.estadoS2, value); }
+        }
+        public string EstadoS3
+        {
+            get { return this.estadoS3; }
+            set { SetValue(ref this.estadoS3, value); }
+        }
+        public string AproximadoS1
+        {
+            get { return this.aproximadoS1; }
+            set { SetValue(ref this.aproximadoS1, value); }
+        }
+        public string AproximadoS3
+        {
+            get { return this.aproximadoS3; }
+            set { SetValue(ref this.aproximadoS3, value); }
+        }
+        public string AproximadoS2
+        {
+            get { return this.aproximadoS2; }
+            set { SetValue(ref this.aproximadoS2, value); }
+        }
+        public string TarifaS1
+        {
+            get { return this.tarifaS1; }
+            set { SetValue(ref this.tarifaS1, value); }
+        }
+        public string TarifaS2
+        {
+            get { return this.tarifaS2; }
+            set { SetValue(ref this.tarifaS2, value); }
+        }
+        public string TarifaS3
+        {
+            get { return this.tarifaS3; }
+            set { SetValue(ref this.tarifaS3, value); }
+        }
+        
         #endregion
 
         #region Comandos
@@ -162,15 +163,15 @@
             this.Measure = MainViewModel.GetIntance().MeasureTable;
             this.Info = MainViewModel.GetIntance().InfoTable;
             this.Estrato = this.Info[0].StatusClass;
-            this.AproximadoS1 = this.Info[0].Service1.AproxMonth;
-            this.AproximadoS2 = this.Info[0].Service2.AproxMonth;
-            this.AproximadoS3 = this.Info[0].Service3.AproxMonth;
+            this.AproximadoS1 = this.Info[0].Service1.AproxMonth.ToString();
+            this.AproximadoS2 = this.Info[0].Service2.AproxMonth.ToString();
+            this.AproximadoS3 = this.Info[0].Service3.AproxMonth.ToString();
             this.FechaFacS1 = this.Info[0].Service1.BillDate;
             this.FechaFacS2 = this.Info[0].Service2.BillDate;
             this.FechaFacS3 = this.Info[0].Service3.BillDate;
-            this.TarifaS1 = this.Info[0].Service1.Fare;
-            this.TarifaS2 = this.Info[0].Service2.Fare;
-            this.TarifaS3 = this.Info[0].Service3.Fare;
+            this.TarifaS1 = this.Info[0].Service1.Fare.ToString();
+            this.TarifaS2 = this.Info[0].Service2.Fare.ToString();
+            this.TarifaS3 = this.Info[0].Service3.Fare.ToString();
             this.EstadoS1 = ObtenerEstado(this.Measure[Measure.Count - 1].Servicio1.Status);
             this.EstadoS2 = ObtenerEstado(this.Measure[Measure.Count - 1].Servicio2.Status);
             this.EstadoS3 = ObtenerEstado(this.Measure[Measure.Count - 1].Servicio3.Status);
@@ -221,8 +222,8 @@
             float _sum = 0;
             float _average = 0;
             for(int i = _diaMes.Count; i > 0; i--)
-            {
-                var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
+                {
+                    var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
                 if (li.Count != 0)
                 {
                     foreach (var it in li)
@@ -283,7 +284,7 @@
                     _average = _sum / _count;
                     Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                     {
-                        Label = D.Key,
+                        Label = D.Key.Remove(D.Key.Length - 1),
                         ValueLabel = _average.ToString(),
                         Color = SKColor.Parse("#FFFFFF")
                     });
@@ -388,7 +389,7 @@
 
         public string ObtenerEstado(int _status)
         {
-            if (_status == 0) return "Activo";
+            if (_status == 1) return "Activo";
             else return "Inactivo";
         }
         #endregion
