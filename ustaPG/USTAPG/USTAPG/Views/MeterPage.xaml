@@ -31,11 +31,27 @@
                             FontSize="28"
                             Text="{Binding Estado,Mode=TwoWay}"></Label>
                     </StackLayout>
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                            TextColor="#FFF"
+                            FontAttributes="Bold"
+                            FontSize="25"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="StartAndExpand"
+                            Text="MAC"></Label>
+                        <Label
+                            TextColor="#FFF"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="EndAndExpand"
+                            FontSize="23"
+                            Text="{Binding MAC,Mode=TwoWay}"></Label>
+                    </StackLayout>
                     <Label
                         TextColor="#FFF"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="EndAndExpand"
-                        FontSize="25"
+                        FontSize="24"
                         Text="{Binding Direccion,Mode=TwoWay}"></Label>
                 </StackLayout>
                 <!--<StackLayout

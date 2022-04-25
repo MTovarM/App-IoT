@@ -53,10 +53,10 @@
                     </Label>
                     <ActivityIndicator
                         IsRunning="{Binding Iniciado, Mode=TwoWay}"
-                        VerticalOptions="CenterAndExpand">
+                        VerticalOptions="Start">
                     </ActivityIndicator>
                     <StackLayout
-                        VerticalOptions="EndAndExpand"
+                        VerticalOptions="Start"
                         Margin="25">
                         <Button
                             Command="{Binding EntrarCommand}"
@@ -67,13 +67,6 @@
                             HeightRequest="46"
                             Text="Entrar">
                         </Button>
-                        <!--<Button
-                            IsEnabled="{Binding Habilitado, Mode=TwoWay}"
-                            Command="{Binding RegistrarCommand}"
-                            BackgroundColor="#F7DE6E"
-                            BorderRadius="23"
-                            Text="Registrarse">
-                        </Button>-->
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

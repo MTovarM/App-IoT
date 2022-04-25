@@ -18,6 +18,7 @@
         public bool dia;
         public bool hora;
         public bool mes;
+        public string mac;
         public string estrato;
         public string estadoS1;
         public string estadoS2;
@@ -169,6 +170,11 @@
             get { return this.tarifaS3; }
             set { SetValue(ref this.tarifaS3, value); }
         }
+        public string MAC
+        {
+            get { return this.mac; }
+            set { SetValue(ref this.mac, value); }
+        }
         #endregion
 
         #region Comandos
@@ -184,6 +190,7 @@
         #region Constructor
         public MeterViewModel()
         {
+            this.MAC = MainViewModel.GetIntance().SMAC;
             this.Servicio1 = ObtenerEstado(MainViewModel.GetIntance().Metertable.Services.Service1);
             this.Servicio2 = ObtenerEstado(MainViewModel.GetIntance().Metertable.Services.Service2);
             this.Servicio3 = ObtenerEstado(MainViewModel.GetIntance().Metertable.Services.Service3);

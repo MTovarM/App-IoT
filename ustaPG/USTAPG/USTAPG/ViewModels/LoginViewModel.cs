@@ -7,6 +7,10 @@
     using Xamarin.Forms;
     using Plugin.Connectivity;
     using System;
+    using System.IO;
+    using USTAPG.Models;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class LoginViewModel : BaseViewModel
     {
@@ -18,6 +22,7 @@
         #endregion
 
         #region Propiedades
+        public bool IsUserCreated { get; set; }
         public SFirebase Firebase { get; set; }
         public bool Habilitado 
         {
@@ -55,11 +60,11 @@
         #region Constructor
         public LoginViewModel()
         {
-            this.Correo = "mtovarson@gmail.com";
-            this.Clave = "Alfa199823";
+            //this.Correo = "mtovarson@gmail.com";
+            //this.Clave = "Alfa199823";
             this.Habilitado = true;
             this.Recordar = true;
-            //GenerarData();
+            ValidarUsuario();
         }
         #endregion
 
@@ -102,6 +107,24 @@
         }
 
         #region Métodos
+        public async void ValidarUsuario()
+        {
+            MainViewModel.GetIntance().DB = new DataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "prueba1.db3"));
+            var u = await GetUser();
+            MainViewModel.GetIntance().U_Usuario = new List<Usuario>();
+            if (u.Count > 0)
+            {
+                MainViewModel.GetIntance().U_Usuario.Add(u[0]);
+                this.Correo = MainViewModel.GetIntance().U_Usuario[0].User;
+                this.Clave = MainViewModel.GetIntance().U_Usuario[0].Clave;
+            }
+            else
+            {
+                this.Correo = string.Empty;
+                this.Clave = string.Empty;
+            }
+        }
+
         private async void Entrar()
         {
             if (!CrossConnectivity.Current.IsConnected)
@@ -157,10 +180,51 @@
             }
             this.Habilitado = true;
             this.Iniciado = false;
+
+            if (this.Recordar)
+            {
+                if (MainViewModel.GetIntance().U_Usuario.Count > 0)
+                {
+                    MainViewModel.GetIntance().U_Usuario[0].Clave = this.Clave;
+                    MainViewModel.GetIntance().U_Usuario[0].User = this.Correo;
+                }
+                else
+                {
+                    MainViewModel.GetIntance().U_Usuario.Add(new Usuario()
+                    {
+                        User = this.Correo,
+                        Clave = this.Clave
+                    });
+                }
+            }
+            else
+            {
+                if (MainViewModel.GetIntance().U_Usuario.Count > 0)
+                {
+                    MainViewModel.GetIntance().U_Usuario[0].Clave = string.Empty;
+                    MainViewModel.GetIntance().U_Usuario[0].User = string.Empty;
+                }
+                else
+                {
+                    MainViewModel.GetIntance().U_Usuario.Add(new Usuario()
+                    {
+                        User = string.Empty,
+                        Clave = string.Empty
+                    });
+                }
+            }
+            MainViewModel.GetIntance().SUsuario = this.Correo;
+            MainViewModel.GetIntance().SClave = this.Clave;
             MainViewModel.GetIntance().MacMainPage = new MacViewModel(this.Correo, this.Clave);
             await Application.Current.MainPage.Navigation.PushAsync(new MACPage());
             this.Correo = string.Empty;
             this.Clave = string.Empty;
+        }
+
+        public async Task<List<Usuario>> GetUser()
+        {
+            var a = await MainViewModel.GetIntance().DB.GetPeopleAsync<Usuario>();
+            return a;
         }
         #endregion
     }

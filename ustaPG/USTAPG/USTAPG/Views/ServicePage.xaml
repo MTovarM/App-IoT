@@ -5,7 +5,7 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              xmlns:Grafica="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              Icon="light"
-             Title="Electricidad">
+             Title="Energía">
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Meter}">
@@ -14,7 +14,6 @@
                     Padding="15,15,0,0"
                     BackgroundColor="#1D56FF">
                     <StackLayout
-                    
                     Orientation="Horizontal"
                     Padding="25,0,40,0">
                         <Label

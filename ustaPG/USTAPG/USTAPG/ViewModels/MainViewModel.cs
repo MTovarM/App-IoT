@@ -4,13 +4,20 @@
     using System.Collections.Generic;
     using System.Text;
     using USTAPG.Models;
+    using USTAPG.Services;
 
     public class MainViewModel
     {
-        #region Propiedades
+        #region 
+        public List<Usuario> U_Usuario { get; set; }
+        public DataBase DB { get; set; }
+        public Usuario UserDB { get; set; }
         public List<measureTable> MeasureTable { get; set; }
         public List<InfoTable> InfoTable { get; set; }
         public MeterTable Metertable { get; set; }
+        public string SMAC { get; set; }
+        public string SUsuario { get; set; }
+        public string SClave { get; set; }
         #endregion
 
         #region ViewModels
