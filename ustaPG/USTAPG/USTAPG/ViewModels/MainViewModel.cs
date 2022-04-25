@@ -10,6 +10,7 @@
         #region Propiedades
         public List<measureTable> MeasureTable { get; set; }
         public List<InfoTable> InfoTable { get; set; }
+        public MeterTable Metertable { get; set; }
         #endregion
 
         #region ViewModels

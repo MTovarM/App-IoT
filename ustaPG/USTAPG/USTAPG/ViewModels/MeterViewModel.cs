@@ -30,10 +30,35 @@
         public string tarifaS2;
         public string aproximadoS1;
         public string aproximadoS2;
-        public string aproximadoS3;       
+        public string aproximadoS3;
+        public string servicio1;
+        public string servicio2;
+        public string servicio3;
+        public string direccion;
         #endregion
 
         #region Propiedades
+        public string Servicio1
+        {
+            get { return this.servicio1; }
+            set { SetValue(ref this.servicio1, value); }
+        }
+        public string Servicio2
+        {
+            get { return this.servicio2; }
+            set { SetValue(ref this.servicio2, value); }
+        }
+        public string Servicio3
+        {
+            get { return this.servicio3; }
+            set { SetValue(ref this.servicio3, value); }
+        }
+        public string Direccion
+        {
+            get { return this.direccion; }
+            set { SetValue(ref this.direccion, value); }
+        }
+        public MeterTable MeterT { get; set; }
         public string[] Meses { get; set; }
         public List<Servicio> S1 { get; set; }
         public List<Servicio> S2 { get; set; }
@@ -144,7 +169,6 @@
             get { return this.tarifaS3; }
             set { SetValue(ref this.tarifaS3, value); }
         }
-        
         #endregion
 
         #region Comandos
@@ -160,6 +184,11 @@
         #region Constructor
         public MeterViewModel()
         {
+            this.Servicio1 = ObtenerEstado(MainViewModel.GetIntance().Metertable.Services.Service1);
+            this.Servicio2 = ObtenerEstado(MainViewModel.GetIntance().Metertable.Services.Service2);
+            this.Servicio3 = ObtenerEstado(MainViewModel.GetIntance().Metertable.Services.Service3);
+            this.Direccion = MainViewModel.GetIntance().Metertable.Address;
+            this.MeterT = MainViewModel.GetIntance().Metertable;
             this.Measure = MainViewModel.GetIntance().MeasureTable;
             this.Info = MainViewModel.GetIntance().InfoTable;
             this.Estrato = this.Info[0].StatusClass;
@@ -200,6 +229,33 @@
             this.Hora = true;
             this.Dia = false;
             this.Mes = false;
+            var GHora1 = OrganizarHora(1).OrderBy(o => o.Label).ToList();
+            var GHora2 = OrganizarHora(2).OrderBy(o => o.Label).ToList();
+            var GHora3 = OrganizarHora(3).OrderBy(o => o.Label).ToList();
+            GHora1.Reverse();
+            GHora3.Reverse();
+            GHora2.Reverse();
+            this.Gra1 = new BarChart()
+            {
+                Entries = GHora1,
+                LabelColor = SKColor.Parse("#FFFF"),
+                LabelTextSize = 34,
+                BackgroundColor = SKColor.Parse("#1D56FF")
+            };
+            this.Gra2 = new BarChart()
+            {
+                Entries = GHora2,
+                LabelColor = SKColor.Parse("#FFFF"),
+                LabelTextSize = 34,
+                BackgroundColor = SKColor.Parse("#1D56FF")
+            };
+            this.Gra3 = new BarChart()
+            {
+                Entries = GHora3,
+                LabelColor = SKColor.Parse("#FFFF"),
+                LabelTextSize = 34,
+                BackgroundColor = SKColor.Parse("#1D56FF")
+            };
         }
         #endregion
 
@@ -238,7 +294,8 @@
                         {
                             Label = _hours.ToString() + ":00",
                             ValueLabel = _average.ToString(),
-                            Color = SKColor.Parse("#FFFFFF")
+                            Color = SKColor.Parse("#FFFFFF"),
+                            ValueLabelColor = SKColor.Parse("#FFFFFF")
                         });
                         _diaMes.RemoveAll(a => a.Date.Contains(_hours + ":"));
                     }
@@ -284,9 +341,10 @@
                     _average = _sum / _count;
                     Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                     {
-                        Label = D.Key.Remove(D.Key.Length - 1),
+                        Label = D.Key.Remove(D.Key.Length - 5, 5),
                         ValueLabel = _average.ToString(),
-                        Color = SKColor.Parse("#FFFFFF")
+                        Color = SKColor.Parse("#FFFFFF"),
+                        ValueLabelColor = SKColor.Parse("#FFFFFF")
                     });
                 }
                 catch (Exception)
@@ -327,7 +385,8 @@
                     {
                         Label = M,
                         ValueLabel = _average.ToString(),
-                        Color = SKColor.Parse("#FFFFFF")
+                        Color = SKColor.Parse("#FFFFFF"),
+                        ValueLabelColor = SKColor.Parse("#FFFFFF")
                     });
                 }
                 catch (Exception)
@@ -351,8 +410,20 @@
                     LabelTextSize = 34,
                     ValueLabelOrientation = Orientation.Horizontal,
                     BackgroundColor = SKColor.Parse("#1D56FF")};
-                this.Gra2 = new BarChart() { Entries = GMes2 };
-                this.Gra3 = new BarChart() { Entries = GMes3 };
+                this.Gra2 = new BarChart() {
+                    Entries = GMes2,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
+                this.Gra3 = new BarChart() {
+                    Entries = GMes3,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
             }
             else if (this.Hora)
             {
@@ -365,11 +436,18 @@
                 this.Gra1 = new BarChart() { Entries = GHora1,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = 34,
-                    ValueLabelOrientation = Orientation.Horizontal,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra2 = new BarChart() { Entries = GHora2 };
-                this.Gra3 = new BarChart() { Entries = GHora3 };
+                this.Gra2 = new BarChart() { Entries = GHora2,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
+                this.Gra3 = new BarChart() { Entries = GHora3,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
             }
             else if(this.Dia)
             {
@@ -379,18 +457,32 @@
                 this.Gra1 = new BarChart() { Entries = GDia1,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = 34,
-                    ValueLabelOrientation = Orientation.Horizontal,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra2 = new BarChart() { Entries = GDia2 };
-                this.Gra3 = new BarChart() { Entries = GDia3 };
+                this.Gra2 = new BarChart() { Entries = GDia2,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
+                this.Gra3 = new BarChart() { Entries = GDia3,
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = 34,
+                    BackgroundColor = SKColor.Parse("#1D56FF")
+                };
             }
         }
 
         public string ObtenerEstado(int _status)
         {
             if (_status == 1) return "Activo";
-            else return "Inactivo";
+            else if (_status == 0) return "Inactivo";
+            else if (_status == 2) return "Activo (P)";
+            else if (_status == 3) return "Activo (P)";
+            else if (_status == 4) return "Activo (P)";
+            else if (_status == 5) return "Activo (P)";
+            else if (_status == 6) return "Activo (P)";
+            else if (_status == 7) return "Activo (P)";
+            else return "Activo (P)";
         }
         #endregion
     }

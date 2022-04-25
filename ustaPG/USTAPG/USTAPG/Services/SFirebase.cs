@@ -99,6 +99,24 @@
             }
             return Measures;
         }
+
+        public async Task<MeterTable> GetMeter(string _meter)
+        {
+            var firebase = ClienteAutenticadoConEmail();
+            var Products = await firebase
+                .Child("meterTable")
+                .OnceAsync<MeterTable>();
+            MeterTable M = new MeterTable();
+            foreach (var PR in Products) 
+            {
+                if (PR.Key == _meter) 
+                {
+                    M = PR.Object;
+                    break;
+                }
+            }
+            return M;
+        }
         /*
         public async Task<string> Con()
         {

@@ -9,6 +9,7 @@
     using USTAPG.Services;
     using System.Collections.Generic;
     using USTAPG.Models;
+    using System.Linq;
 
     public class MacViewModel:BaseViewModel
     {
@@ -53,6 +54,7 @@
             {
                 List<measureTable> Datos = new List<measureTable>();
                 List<InfoTable> Info = new List<InfoTable>();
+                MeterTable Meter = new MeterTable();
                 var qr = new ZXing.Mobile.MobileBarcodeScanner();
                 qr.TopText = "Escanea el código por favor";
                 qr.BottomText = "Proyecto de Grado USTA 2022";
@@ -77,6 +79,11 @@
                     {
                         Datos = await Firebase.GetMeasure(lectura.Text);//"a4:cf:12:d9:3f:b7");
                         Info = await Firebase.GetInfo(lectura.Text);
+                        Meter = await Firebase.GetMeter(lectura.Text);
+                        if (string.IsNullOrEmpty(Meter.Gateway)) await Application.Current.MainPage.DisplayAlert(
+                            "Medidor",
+                            "No se encontró información del medidor, por favor contacte a soporte.",
+                            "Aceptar");
                     }
                     catch (Exception)
                     {
@@ -91,6 +98,7 @@
 
                     MainViewModel.GetIntance().MeasureTable = Datos;
                     MainViewModel.GetIntance().InfoTable = Info;
+                    MainViewModel.GetIntance().Metertable = Meter;
                     MainViewModel.GetIntance().Meter = new MeterViewModel();
                     await Application.Current.MainPage.Navigation.PushAsync(new MenuTabbedPage());
                 }

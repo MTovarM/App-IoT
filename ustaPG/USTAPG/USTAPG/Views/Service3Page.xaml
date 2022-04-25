@@ -3,16 +3,144 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="USTAPG.Views.Service3Page"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             xmlns:Grafica="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              Icon="gas"
              Title="Gas">
     <ContentPage.Content>
-        <StackLayout
-            Padding="15"
+        <ScrollView
             BindingContext="{Binding Meter}">
-            <Label Text="{Binding s3, Mode=TwoWay}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            
-        </StackLayout>
+            <StackLayout>
+                <StackLayout
+                    Padding="15,15,0,0"
+                    BackgroundColor="#1D56FF">
+                    <StackLayout
+                    
+                    Orientation="Horizontal"
+                    Padding="25,0,40,0">
+                        <Label
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        FontSize="30"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        Text="ESTADO"></Label>
+                        <Label
+                        TextColor="#FFF"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        FontSize="30"
+                        Text="{Binding EstadoS3,Mode=TwoWay}"></Label>
+                    </StackLayout>
+                    <StackLayout
+                    BackgroundColor="#1D56FF"
+                    Orientation="Horizontal"
+                    VerticalOptions="StartAndExpand" 
+                    HorizontalOptions="End"
+                    Padding="0,0,20,0">
+                        <Label
+                        TextColor="#FFF"
+                        VerticalOptions="CenterAndExpand"
+                        Padding="0,0,20,0"
+                        Text="Ver por:"></Label>
+                        <RadioButton HorizontalOptions="End"
+                                 
+                                 IsChecked="{Binding Mes,Mode=TwoWay}"
+                                 Command="{Binding RadioButtonCommand}" Text=""/>
+                        <Label
+                        TextColor="#FFF"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="End"
+                        Text="Mes"></Label>
+                        <RadioButton HorizontalOptions="End"
+                                 IsChecked="{Binding Dia,Mode=TwoWay}"
+                                 Command="{Binding RadioButtonCommand}"/>
+                        <Label
+                        TextColor="#FFF"
+                        Padding="0,0,10,0"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="End"
+                        Text="Día"></Label>
+                        <RadioButton HorizontalOptions="End"
+                                 IsChecked="{Binding Hora,Mode=TwoWay}"
+                                 Command="{Binding RadioButtonCommand}"/>
+                        <Label
+                        TextColor="#FFF"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="End"
+                        Text="Hora"></Label>
+                    </StackLayout>
+                    <Grafica:ChartView
+                        BackgroundColor="#1D56FF"
+                        VerticalOptions="StartAndExpand" 
+                        x:Name="g1" 
+                        HeightRequest="220" 
+                        Chart="{Binding Gra3}">
+                    </Grafica:ChartView>
+                </StackLayout>
+                <StackLayout
+                    Padding="15,5,0,0">
+                    <StackLayout
+                    Orientation="Horizontal"
+                    Padding="50,0,40,0">
+                        <Label
+                            TextColor="#000"
+                            FontAttributes="Bold"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Estrato: "></Label>
+                        <Label
+                        TextColor="#000"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{Binding Estrato,Mode=TwoWay}"></Label>
+                    </StackLayout>
+                    <StackLayout
+                    Orientation="Horizontal"
+                    Padding="50,0,40,0">
+                        <Label
+                        TextColor="#000"
+                        FontAttributes="Bold"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Tarifa (COP por kWh): "></Label>
+                        <Label
+                        TextColor="#000"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{Binding TarifaS3,Mode=TwoWay}"></Label>
+                    </StackLayout>
+                    <StackLayout
+                    Orientation="Horizontal"
+                    Padding="50,0,40,0">
+                        <Label
+                        TextColor="#000"
+                        FontAttributes="Bold"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Aproximado siguiente mes: "></Label>
+                        <Label
+                        TextColor="#000"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{Binding AproximadoS3,Mode=TwoWay}"></Label>
+                    </StackLayout>
+                    <StackLayout
+                    Orientation="Horizontal"
+                    Padding="50,0,40,0">
+                        <Label
+                        TextColor="#000"
+                        FontAttributes="Bold"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Fecha de facturación: "></Label>
+                        <Label
+                        TextColor="#000"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{Binding FechaFacS3,Mode=TwoWay}"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

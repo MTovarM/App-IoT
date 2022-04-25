@@ -3,22 +3,126 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="USTAPG.Views.MeterPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             xmlns:Grafica="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              Icon="meter"
              Title="Medidor">
     <ContentPage.Content>
         <ScrollView
             Padding="0,15,0,0"
-            BindingContext="{Binding Meter}">
-            <StackLayout>
-                <Label Text="Meter"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-                <Grafica:ChartView 
-                    x:Name="hola" 
-                    HeightRequest="220" 
-                    Chart="{Binding Grap}">
-                </Grafica:ChartView>
+            BindingContext="{Binding Meter}"
+            BackgroundColor="#1D56FF">
+            <StackLayout
+                Padding="15,15,0,0">
+                <StackLayout
+                    Orientation="Vertical"
+                    Padding="25,0,40,0">
+                    <StackLayout
+                        Orientation="Horizontal">
+                        <Label
+                            TextColor="#FFF"
+                            FontAttributes="Bold"
+                            FontSize="30"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Medidor"></Label>
+                        <Label
+                            TextColor="#FFF"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="EndAndExpand"
+                            FontSize="28"
+                            Text="{Binding Estado,Mode=TwoWay}"></Label>
+                    </StackLayout>
+                    <Label
+                        TextColor="#FFF"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        FontSize="25"
+                        Text="{Binding Direccion,Mode=TwoWay}"></Label>
+                </StackLayout>
+                <!--<StackLayout
+                    Padding="0,0,20,0">
+                    <Image
+                        WidthRequest="600"
+                        Source="Login">
+                    </Image>
+                </StackLayout>-->
+                <StackLayout
+                    Padding="25,15,40,0"
+                    Orientation="Horizontal">
+                    <Label
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        FontSize="23"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Estrato"></Label>
+                    <Label
+                        TextColor="#FFF"
+                        FontSize="21"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{Binding Estrato,Mode=TwoWay}"></Label>
+                </StackLayout>
+                <StackLayout
+                    Padding="25,15,40,0">
+                    <Label
+                        TextColor="#FFF"
+                        FontAttributes="Bold"
+                        FontSize="23"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Servicios"></Label>
+                    <StackLayout
+                        Padding="25,15,40,0">
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Label
+                                TextColor="#FFF"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Energía"></Label>
+                            <Label
+                                TextColor="#FFF"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="EndAndExpand"
+                                FontSize="19"
+                                Text="{Binding Servicio1,Mode=TwoWay}"></Label>
+                        </StackLayout>
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Label
+                                TextColor="#FFF"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Agua"></Label>
+                            <Label
+                                TextColor="#FFF"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="EndAndExpand"
+                                FontSize="19"
+                                Text="{Binding Servicio2,Mode=TwoWay}"></Label>
+                        </StackLayout>
+                        <StackLayout
+                            Orientation="Horizontal">
+                            <Label
+                                TextColor="#FFF"
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="StartAndExpand"
+                                Text="Gas"></Label>
+                            <Label
+                                TextColor="#FFF"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="EndAndExpand"
+                                FontSize="19"
+                                Text="{Binding Servicio3,Mode=TwoWay}"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
