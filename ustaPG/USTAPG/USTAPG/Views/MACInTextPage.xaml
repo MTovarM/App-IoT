@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="USTAPG.Views.MACInTextPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="MAC">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding MacTextPage}">
+            <Image
+                WidthRequest="600"
+                Source="MAC">
+            </Image>
+            <StackLayout
+                Padding="29">
+                <Grid VerticalOptions="CenterAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Entry
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="{Binding MAC, Mode=TwoWay}"
+                        Margin="12,0,12,0"
+                        Keyboard="Email"
+                        Placeholder="Ingresar MAC">
+                    </Entry>
+                    <Button
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Command="{Binding Hecho}"
+                        VerticalOptions="CenterAndExpand"
+                        IsEnabled="{Binding Habilitado, Mode=TwoWay}"
+                        BackgroundColor="#1D56FF"
+                        BorderRadius="23"
+                        TextColor="#FFFFFF"
+                        HeightRequest="46"
+                        Text="Hecho">
+                    </Button>
+                    <ActivityIndicator
+                        IsRunning="{Binding Iniciado, Mode=TwoWay}"
+                        VerticalOptions="Start">
+                    </ActivityIndicator>
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -21,9 +21,11 @@
         #endregion
 
         #region ViewModels
+        public bool YaExiste { get; set; }
         public LoginViewModel Login { get; set; }
         public MacViewModel MacMainPage { get; set; }
         public MeterViewModel Meter { get; set; }
+        public MACInTextViewModel MacTextPage { get; set; }
         #endregion
 
         #region Constructor

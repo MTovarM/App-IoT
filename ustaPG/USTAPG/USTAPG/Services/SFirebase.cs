@@ -40,11 +40,12 @@
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert(
-                    "Firebase",
-                    ex.Message,
-                    "Aceptar");
+                //await Application.Current.MainPage.DisplayAlert(
+                //  "Firebase",
+                //ex.Message,
+                //"Aceptar");
                 //System.Diagnostics.Debug.WriteLine(ex);
+                return null;
             }
             if (auth != null)
             {

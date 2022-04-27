@@ -9,8 +9,13 @@
             BindingContext="{Binding Login}">
             <StackLayout>
                 <Image
-                    WidthRequest="600"
-                    Source="Login">
+                    WidthRequest="600">
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android" Value="Login"/>
+                            <On Platform="UWP" Value="Login.png"/>
+                        </OnPlatform>
+                    </Image.Source>
                 </Image>
                 <StackLayout
                     Padding="15">
@@ -45,12 +50,12 @@
                             HorizontalOptions="End">
                         </Switch>
                     </StackLayout>
-                    <Label
+                    <!--<Label
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="Center"
                         TextColor="#507CFF"
                         Text="¿Olvidaste tu contraseña?">
-                    </Label>
+                    </Label>-->
                     <ActivityIndicator
                         IsRunning="{Binding Iniciado, Mode=TwoWay}"
                         VerticalOptions="Start">

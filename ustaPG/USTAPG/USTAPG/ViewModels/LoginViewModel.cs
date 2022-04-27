@@ -109,17 +109,19 @@
         #region Métodos
         public async void ValidarUsuario()
         {
-            MainViewModel.GetIntance().DB = new DataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "prueba1.db3"));
+            MainViewModel.GetIntance().DB = new DataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "full2.db3"));
             var u = await GetUser();
             MainViewModel.GetIntance().U_Usuario = new List<Usuario>();
             if (u.Count > 0)
             {
+                MainViewModel.GetIntance().YaExiste = true;
                 MainViewModel.GetIntance().U_Usuario.Add(u[0]);
                 this.Correo = MainViewModel.GetIntance().U_Usuario[0].User;
                 this.Clave = MainViewModel.GetIntance().U_Usuario[0].Clave;
             }
             else
             {
+                MainViewModel.GetIntance().YaExiste = false;
                 this.Correo = string.Empty;
                 this.Clave = string.Empty;
             }
@@ -164,23 +166,22 @@
             this.Habilitado = false;
             this.Iniciado = true;
             
-            try
-            {
-                Firebase = new SFirebase() { Email = this.Correo, Clave = this.Clave };
-                Firebase.ClienteAutenticadoConEmail();
-                //var a = await Firebase.GetMeasure("a4:cf:12:d9:3f:b7");
-            }
-            catch (System.Exception e)
+            Firebase = new SFirebase() { Email = this.Correo, Clave = this.Clave };
+            var a = await Firebase.LoginWithEmail(false);
+            //var a = await Firebase.GetMeasure("a4:cf:12:d9:3f:b7");
+            if (string.IsNullOrEmpty(a))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "No se conectó" + e.Message,
-                    "Aceptar");
+                "Error",
+                "Datos incorrectos, por favor ingrese el correo y la contraseña correspondiente.",
+                "Aceptar");
+                this.Correo = string.Empty;
+                this.Clave = string.Empty;
+                this.Habilitado = true;
+                this.Iniciado = false;
                 return;
             }
-            this.Habilitado = true;
-            this.Iniciado = false;
-
+            
             if (this.Recordar)
             {
                 if (MainViewModel.GetIntance().U_Usuario.Count > 0)
@@ -213,6 +214,8 @@
                     });
                 }
             }
+            this.Habilitado = true;
+            this.Iniciado = false;
             MainViewModel.GetIntance().SUsuario = this.Correo;
             MainViewModel.GetIntance().SClave = this.Clave;
             MainViewModel.GetIntance().MacMainPage = new MacViewModel(this.Correo, this.Clave);

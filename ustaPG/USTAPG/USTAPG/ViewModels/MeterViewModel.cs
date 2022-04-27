@@ -12,9 +12,10 @@
     public class MeterViewModel : BaseViewModel
     {
         #region Atributos
-        public BarChart gra1;
-        public BarChart gra2;
-        public BarChart gra3;
+        public int height;
+        public LineChart gra1;
+        public LineChart gra2;
+        public LineChart gra3;
         public bool dia;
         public bool hora;
         public bool mes;
@@ -39,6 +40,12 @@
         #endregion
 
         #region Propiedades
+        public int FontSize { get; set; }
+        public int Height
+        {
+            get { return this.height; }
+            set { SetValue(ref this.height, value); }
+        }
         public string Servicio1
         {
             get { return this.servicio1; }
@@ -75,17 +82,17 @@
         public List<string> Gra1X { get; set; }
         public List<string> Gra2X { get; set; }
         public List<string> Gra3X { get; set; }
-        public BarChart Gra1
+        public LineChart Gra1
         {
             get { return this.gra1; }
             set { SetValue(ref this.gra1, value); }
         }
-        public BarChart Gra2
+        public LineChart Gra2
         {
             get { return this.gra2; }
             set { SetValue(ref this.gra2, value); }
         }
-        public BarChart Gra3
+        public LineChart Gra3
         {
             get { return this.gra3; }
             set { SetValue(ref this.gra3, value); }
@@ -224,8 +231,20 @@
             var split = Today.ToString("d").Split('/');
             Meses = new string[12] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep",
             "Oct", "Nov", "Dic"};
-            AcDia = split[0];
-            AcMes = Meses[Convert.ToInt32(split[1]) - 1];
+            try
+            {
+                this.FontSize = 30;
+                this.Height = 200;
+                this.AcDia = split[0];
+                this.AcMes = Meses[Convert.ToInt32(split[1]) - 1];
+            }
+            catch (Exception)
+            {
+                this.FontSize = 19;
+                this.Height = 400;
+                this.AcDia = split[1];
+                this.AcMes = Meses[Convert.ToInt32(split[0]) - 1];
+            }
             AcAnio = split[2];
             foreach (var M in this.Measure)
             {
@@ -242,25 +261,25 @@
             GHora1.Reverse();
             GHora3.Reverse();
             GHora2.Reverse();
-            this.Gra1 = new BarChart()
+            this.Gra1 = new LineChart()
             {
                 Entries = GHora1,
                 LabelColor = SKColor.Parse("#FFFF"),
-                LabelTextSize = 34,
+                LabelTextSize = this.FontSize,
                 BackgroundColor = SKColor.Parse("#1D56FF")
             };
-            this.Gra2 = new BarChart()
+            this.Gra2 = new LineChart()
             {
                 Entries = GHora2,
                 LabelColor = SKColor.Parse("#FFFF"),
-                LabelTextSize = 34,
+                LabelTextSize = this.FontSize,
                 BackgroundColor = SKColor.Parse("#1D56FF")
             };
-            this.Gra3 = new BarChart()
+            this.Gra3 = new LineChart()
             {
                 Entries = GHora3,
                 LabelColor = SKColor.Parse("#FFFF"),
-                LabelTextSize = 34,
+                LabelTextSize = this.FontSize,
                 BackgroundColor = SKColor.Parse("#1D56FF")
             };
         }
@@ -300,7 +319,7 @@
                         Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                         {
                             Label = _hours.ToString() + ":00",
-                            ValueLabel = _average.ToString(),
+                            ValueLabel = decimal.Round(Convert.ToDecimal(_average),2).ToString(),
                             Color = SKColor.Parse("#FFFFFF"),
                             ValueLabelColor = SKColor.Parse("#FFFFFF")
                         });
@@ -349,7 +368,7 @@
                     Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                     {
                         Label = D.Key.Remove(D.Key.Length - 5, 5),
-                        ValueLabel = _average.ToString(),
+                        ValueLabel = decimal.Round(Convert.ToDecimal(_average), 2).ToString(),//_average.ToString(),
                         Color = SKColor.Parse("#FFFFFF"),
                         ValueLabelColor = SKColor.Parse("#FFFFFF")
                     });
@@ -391,7 +410,7 @@
                     Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                     {
                         Label = M,
-                        ValueLabel = _average.ToString(),
+                        ValueLabel = decimal.Round(Convert.ToDecimal(_average), 2).ToString(),//_average.ToString(),
                         Color = SKColor.Parse("#FFFFFF"),
                         ValueLabelColor = SKColor.Parse("#FFFFFF")
                     });
@@ -412,22 +431,22 @@
                 var GMes1 = OrganizarMes(1).ToList();
                 var GMes2 = OrganizarMes(2).ToList();
                 var GMes3 = OrganizarMes(3).ToList();
-                this.Gra1 = new BarChart() { Entries = GMes1, 
-                    LabelColor = SKColor.Parse("#FFFF"), 
-                    LabelTextSize = 34,
+                this.Gra1 = new LineChart() { Entries = GMes1, 
+                    LabelColor = SKColor.Parse("#FFFF"),
+                    LabelTextSize = this.FontSize,
                     ValueLabelOrientation = Orientation.Horizontal,
                     BackgroundColor = SKColor.Parse("#1D56FF")};
-                this.Gra2 = new BarChart() {
+                this.Gra2 = new LineChart() {
                     Entries = GMes2,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     ValueLabelOrientation = Orientation.Horizontal,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra3 = new BarChart() {
+                this.Gra3 = new LineChart() {
                     Entries = GMes3,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     ValueLabelOrientation = Orientation.Horizontal,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
@@ -440,19 +459,19 @@
                 GHora1.Reverse();
                 GHora3.Reverse();
                 GHora2.Reverse();
-                this.Gra1 = new BarChart() { Entries = GHora1,
+                this.Gra1 = new LineChart() { Entries = GHora1,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra2 = new BarChart() { Entries = GHora2,
+                this.Gra2 = new LineChart() { Entries = GHora2,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra3 = new BarChart() { Entries = GHora3,
+                this.Gra3 = new LineChart() { Entries = GHora3,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
             }
@@ -461,19 +480,19 @@
                 var GDia1 = OrganizarDia(1).ToList();
                 var GDia2 = OrganizarDia(2).ToList();
                 var GDia3 = OrganizarDia(3).ToList();
-                this.Gra1 = new BarChart() { Entries = GDia1,
+                this.Gra1 = new LineChart() { Entries = GDia1,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra2 = new BarChart() { Entries = GDia2,
+                this.Gra2 = new LineChart() { Entries = GDia2,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
-                this.Gra3 = new BarChart() { Entries = GDia3,
+                this.Gra3 = new LineChart() { Entries = GDia3,
                     LabelColor = SKColor.Parse("#FFFF"),
-                    LabelTextSize = 34,
+                    LabelTextSize = this.FontSize,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
             }

@@ -68,13 +68,18 @@
                         HorizontalOptions="End"
                         Text="Hora"></Label>
                     </StackLayout>
+                    
+                    
                     <Grafica:ChartView
                         BackgroundColor="#1D56FF"
                         VerticalOptions="StartAndExpand" 
                         x:Name="g1" 
-                        HeightRequest="220" 
+                        HeightRequest="{Binding Height, Mode=TwoWay}"
+                        WidthRequest="200"
                         Chart="{Binding Gra1}">
                     </Grafica:ChartView>
+                
+                    
                 </StackLayout>
                 <StackLayout
                     Padding="15,5,0,0">
@@ -94,23 +99,23 @@
                         Text="{Binding Estrato,Mode=TwoWay}"></Label>
                     </StackLayout>
                     <StackLayout
-                    Orientation="Horizontal"
-                    Padding="50,0,40,0">
+                        Orientation="Horizontal"
+                        Padding="50,0,40,0">
                         <Label
-                        TextColor="#000"
-                        FontAttributes="Bold"
-                        VerticalOptions="CenterAndExpand"
-                        HorizontalOptions="StartAndExpand"
-                        Text="Tarifa (COP por kWh): "></Label>
+                            TextColor="#000"
+                            FontAttributes="Bold"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Tarifa (COP por kWh): "></Label>
                         <Label
-                        TextColor="#000"
-                        VerticalOptions="CenterAndExpand"
-                        HorizontalOptions="EndAndExpand"
-                        Text="{Binding TarifaS1,Mode=TwoWay}"></Label>
+                            TextColor="#000"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="EndAndExpand"
+                            Text="{Binding TarifaS1,Mode=TwoWay}"></Label>
                     </StackLayout>
                     <StackLayout
-                    Orientation="Horizontal"
-                    Padding="50,0,40,0">
+                        Orientation="Horizontal"
+                        Padding="50,0,40,0">
                         <Label
                         TextColor="#000"
                         FontAttributes="Bold"
