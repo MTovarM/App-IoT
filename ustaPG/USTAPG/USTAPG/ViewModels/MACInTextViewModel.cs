@@ -10,6 +10,7 @@
     using USTAPG.Models;
     using System.Linq;
     using System.IO;
+    using System.Threading.Tasks;
 
     public class MACInTextViewModel:BaseViewModel
     {
@@ -111,6 +112,15 @@
                     this.Iniciado = false;
                     return;
                 }
+                if (!await VerificarUsuario(Firebase, UN_MAC))
+                {
+                    await Application.Current.MainPage.DisplayAlert(
+                    "Sesion",
+                    "No tiene permitido ingresar a la información de este medidor. Contacte a soporte.",
+                    "Aceptar");
+                    this.Iniciado = false;
+                    return;
+                }
             }
             catch (Exception)
             {
@@ -135,6 +145,14 @@
             MainViewModel.GetIntance().Meter = new MeterViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new MenuTabbedPage());
             this.Iniciado = false;
+        }
+
+        public async Task<bool> VerificarUsuario(SFirebase _fb, string _medidor)
+        {
+            bool val = false;
+            var usuarios = await _fb.GetSesion(_medidor);
+            foreach (var u in usuarios) if (u.Email == _fb.Email) return true;
+            return val;
         }
         #endregion
     }

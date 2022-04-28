@@ -5,9 +5,11 @@
     using SkiaSharp;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Windows.Input;
     using USTAPG.Models;
+    using Xamarin.Forms;
 
     public class MeterViewModel : BaseViewModel
     {
@@ -233,19 +235,27 @@
             "Oct", "Nov", "Dic"};
             try
             {
-                this.FontSize = 30;
-                this.Height = 200;
-                this.AcDia = split[0];
-                this.AcMes = Meses[Convert.ToInt32(split[1]) - 1];
-            }
-            catch (Exception)
-            {
-                this.FontSize = 19;
-                this.Height = 400;
                 this.AcDia = split[1];
                 this.AcMes = Meses[Convert.ToInt32(split[0]) - 1];
             }
+            catch (Exception)
+            {   
+                this.Height = 400;
+                this.AcDia = split[0];
+                this.AcMes = Meses[Convert.ToInt32(split[1]) - 1];
+            }
             AcAnio = split[2];
+            switch (Device.RuntimePlatform)
+            {
+                case Device.UWP:
+                    this.FontSize = 19;
+                    this.Height = 400;
+                    break;
+                default:
+                    this.FontSize = 30;
+                    this.Height = 220;
+                    break;
+            }
             foreach (var M in this.Measure)
             {
                 S1.Add(M.Servicio1);
@@ -255,9 +265,9 @@
             this.Hora = true;
             this.Dia = false;
             this.Mes = false;
-            var GHora1 = OrganizarHora(1).OrderBy(o => o.Label).ToList();
-            var GHora2 = OrganizarHora(2).OrderBy(o => o.Label).ToList();
-            var GHora3 = OrganizarHora(3).OrderBy(o => o.Label).ToList();
+            var GHora1 = OrganizarHora(1);
+            var GHora2 = OrganizarHora(2);
+            var GHora3 = OrganizarHora(3);
             GHora1.Reverse();
             GHora3.Reverse();
             GHora2.Reverse();
@@ -288,24 +298,22 @@
         #region Metodos
         public List<ChartEntry> OrganizarHora(int _NumService)
         {
-            //Nececito los tres: Dia, mes y año
-            AcMes = "May";
-            AcDia = "27";
-            //-----------------------------------
-
+            //Necesito los tres: Dia, mes y año
             List<Servicio> _temp = new List<Servicio>();
             if (_NumService == 1) _temp = S1;
             else if (_NumService == 2) _temp = S2;
             else _temp = S3;
-            var _diaMes = _temp.Where(m => m.Date.ToLower().Contains(AcDia + "/" + AcMes.ToLower() + "/" + AcAnio)).ToList();
+            string AcDiaTemp = "";
+            var f = Convert.ToInt32(AcDia) < 10 ? AcDiaTemp += " " + AcDia : AcDiaTemp += AcDia;
+            var _diaMes = _temp.Where(m => m.Date.ToLower().Contains(AcDiaTemp + "/" + AcMes.ToLower() + "/" + AcAnio)).ToList();
             List<ChartEntry> Gra1entry = new List<ChartEntry>();
             int _hours = 23;
             int _count = 0;
             float _sum = 0;
             float _average = 0;
             for(int i = _diaMes.Count; i > 0; i--)
-                {
-                    var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
+            {
+                var li = _diaMes.Where(h => h.Date.Contains(_hours + ":")).ToList();
                 if (li.Count != 0)
                 {
                     foreach (var it in li)
@@ -315,11 +323,15 @@
                     }
                     try
                     {
-                        _average = _sum / _count;
+                        _average = _sum;
+                        string GraLabel = "";
+                        if (_NumService == 1) GraLabel = (_average / 1000).ToString("N1") + " kWh";
+                        else if (_NumService == 2) GraLabel = Convert.ToInt32(_average) + " L";
+                        else GraLabel = Convert.ToInt32(_average) + " L";
                         Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                         {
                             Label = _hours.ToString() + ":00",
-                            ValueLabel = decimal.Round(Convert.ToDecimal(_average),2).ToString(),
+                            ValueLabel = GraLabel,
                             Color = SKColor.Parse("#FFFFFF"),
                             ValueLabelColor = SKColor.Parse("#FFFFFF")
                         });
@@ -339,9 +351,6 @@
         public List<ChartEntry> OrganizarDia(int _NumService)
         {
             //Necesito dos: mes y año
-            AcMes = "May";
-            //---------------------------------
-
             List<Servicio> _temp = new List<Servicio>();
             if (_NumService == 1) _temp = S1;
             else if (_NumService == 2) _temp = S2;
@@ -364,11 +373,15 @@
                 }
                 try
                 {
-                    _average = _sum / _count;
+                    _average = _sum;
+                    string GraLabel = "";
+                    if (_NumService == 1) GraLabel = (_average / 1000).ToString("N1") + " kWh";
+                    else if (_NumService == 2) GraLabel = Convert.ToInt32(_average) + " L";
+                    else GraLabel = Convert.ToInt32(_average) + " L";
                     Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                     {
                         Label = D.Key.Remove(D.Key.Length - 5, 5),
-                        ValueLabel = decimal.Round(Convert.ToDecimal(_average), 2).ToString(),//_average.ToString(),
+                        ValueLabel = GraLabel,
                         Color = SKColor.Parse("#FFFFFF"),
                         ValueLabelColor = SKColor.Parse("#FFFFFF")
                     });
@@ -385,8 +398,6 @@
         public List<ChartEntry> OrganizarMes(int _NumService)
         {
             //Necesito solo el año
-            //---------------------------------
-
             List<Servicio> _temp = new List<Servicio>();
             if (_NumService == 1) _temp = S1;
             else if (_NumService == 2) _temp = S2;
@@ -406,11 +417,15 @@
                 }
                 try
                 {
-                    _average = _sum / _count;
+                    _average = _sum;
+                    string GraLabel = "";
+                    if (_NumService == 1) GraLabel = (_average / 1000).ToString("N1") + " kWh";
+                    else if (_NumService == 2) GraLabel = Convert.ToInt32(_average) + " L";
+                    else GraLabel = Convert.ToInt32(_average) + " L";
                     Gra1entry.Add(new ChartEntry(Convert.ToInt32(_average))
                     {
                         Label = M,
-                        ValueLabel = decimal.Round(Convert.ToDecimal(_average), 2).ToString(),//_average.ToString(),
+                        ValueLabel = GraLabel,
                         Color = SKColor.Parse("#FFFFFF"),
                         ValueLabelColor = SKColor.Parse("#FFFFFF")
                     });
@@ -434,44 +449,50 @@
                 this.Gra1 = new LineChart() { Entries = GMes1, 
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
-                    ValueLabelOrientation = Orientation.Horizontal,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")};
                 this.Gra2 = new LineChart() {
                     Entries = GMes2,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
-                    ValueLabelOrientation = Orientation.Horizontal,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
                 this.Gra3 = new LineChart() {
                     Entries = GMes3,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
-                    ValueLabelOrientation = Orientation.Horizontal,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
             }
             else if (this.Hora)
             {
-                var GHora1 = OrganizarHora(1).OrderBy(o => o.Label).ToList();
-                var GHora2 = OrganizarHora(2).OrderBy(o => o.Label).ToList();
-                var GHora3 = OrganizarHora(3).OrderBy(o => o.Label).ToList();
+                //var GHora1 = OrganizarHora(1).OrderBy(o => o.Label).ToList();
+                //var GHora2 = OrganizarHora(2).OrderBy(o => o.Label).ToList();
+                //var GHora3 = OrganizarHora(3).OrderBy(o => o.Label).ToList();
+                var GHora1 = OrganizarHora(1);
+                var GHora2 = OrganizarHora(2);
+                var GHora3 = OrganizarHora(3);
                 GHora1.Reverse();
                 GHora3.Reverse();
                 GHora2.Reverse();
                 this.Gra1 = new LineChart() { Entries = GHora1,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
                 this.Gra2 = new LineChart() { Entries = GHora2,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
                 this.Gra3 = new LineChart() { Entries = GHora3,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
             }
@@ -483,16 +504,19 @@
                 this.Gra1 = new LineChart() { Entries = GDia1,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
                 this.Gra2 = new LineChart() { Entries = GDia2,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
                 this.Gra3 = new LineChart() { Entries = GDia3,
                     LabelColor = SKColor.Parse("#FFFF"),
                     LabelTextSize = this.FontSize,
+                    ValueLabelOrientation = Orientation.Vertical,
                     BackgroundColor = SKColor.Parse("#1D56FF")
                 };
             }

@@ -73,7 +73,7 @@
                         BackgroundColor="#1D56FF"
                         VerticalOptions="StartAndExpand" 
                         x:Name="g1" 
-                        HeightRequest="220" 
+                        HeightRequest="{Binding Height, Mode=TwoWay}" 
                         Chart="{Binding Gra3}">
                     </Grafica:ChartView>
                 </StackLayout>
@@ -102,7 +102,7 @@
                         FontAttributes="Bold"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="StartAndExpand"
-                        Text="Tarifa (COP por kWh): "></Label>
+                        Text="Tarifa (COP por 1000 L): "></Label>
                         <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"

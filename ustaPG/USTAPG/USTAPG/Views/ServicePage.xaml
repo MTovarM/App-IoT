@@ -75,7 +75,6 @@
                         VerticalOptions="StartAndExpand" 
                         x:Name="g1" 
                         HeightRequest="{Binding Height, Mode=TwoWay}"
-                        WidthRequest="200"
                         Chart="{Binding Gra1}">
                     </Grafica:ChartView>
                 
