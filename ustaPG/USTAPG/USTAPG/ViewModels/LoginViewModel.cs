@@ -67,7 +67,6 @@
             //GenerarData();
             //Encriptacion Codificacion = new Encriptacion();
             //Codificacion.Encriptar("a4:cf:12:d9:3f:b7");
-
             ValidarUsuario();
         }
         #endregion
@@ -77,7 +76,7 @@
             //string[] Meses = new string[12] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep",
             //"Oct", "Nov", "Dic"};
             string t = "{";
-            string[] Meses = new string[5] { "Ene", "Feb", "Mar", "Abr", "May" };
+            string[] Meses = new string[6] { "Ene", "Feb", "Mar", "Abr", "May","Jun" };
             string _InfoTable = "\"InfoTable\": {" +
                     "\"a4:cf:12:d9:3e:88\": {" +
                         "\"Val\": {" +

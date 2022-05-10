@@ -208,9 +208,9 @@
             this.Measure = MainViewModel.GetIntance().MeasureTable;
             this.Info = MainViewModel.GetIntance().InfoTable;
             this.Estrato = this.Info[0].StatusClass;
-            this.AproximadoS1 = this.Info[0].Service1.AproxMonth.ToString();
-            this.AproximadoS2 = this.Info[0].Service2.AproxMonth.ToString();
-            this.AproximadoS3 = this.Info[0].Service3.AproxMonth.ToString();
+            this.AproximadoS1 = ValStatus(this.Info[0].Service1.AproxMonth);
+            this.AproximadoS2 = ValStatus(this.Info[0].Service2.AproxMonth);
+            this.AproximadoS3 = ValStatus(this.Info[0].Service3.AproxMonth);
             this.FechaFacS1 = this.Info[0].Service1.BillDate;
             this.FechaFacS2 = this.Info[0].Service2.BillDate;
             this.FechaFacS3 = this.Info[0].Service3.BillDate;
@@ -533,6 +533,16 @@
             else if (_status == 6) return "Activo (P)";
             else if (_status == 7) return "Activo (P)";
             else return "Activo (P)";
+        }
+        
+        public string ValStatus(float _status)
+        {
+            string requestStatus = string.Empty;
+            if (_status == 1) requestStatus = "Normal";
+            else if (_status == 2) requestStatus = "Superior";
+            else if (_status == 3) requestStatus = "Inferior";
+            else requestStatus = "No disponible";
+            return requestStatus;
         }
         #endregion
     }

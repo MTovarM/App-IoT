@@ -117,7 +117,7 @@
                         FontAttributes="Bold"
                         VerticalOptions="CenterAndExpand"
                         HorizontalOptions="StartAndExpand"
-                        Text="Aproximado siguiente mes: "></Label>
+                        Text="Medición: "></Label>
                         <Label
                         TextColor="#000"
                         VerticalOptions="CenterAndExpand"

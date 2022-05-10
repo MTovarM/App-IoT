@@ -1,4 +1,4 @@
-﻿namespace USTAPG.Services
+﻿  namespace USTAPG.Services
 {
     using Firebase.Auth;
     using Firebase.Database;
