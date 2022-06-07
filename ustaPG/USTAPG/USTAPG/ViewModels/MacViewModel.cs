@@ -22,7 +22,6 @@
         #endregion
 
         #region Propiedaes
-
         public SFirebase Firebase { get; set; }
         public string Correo { get; set; }
         public string Clave { get; set;}

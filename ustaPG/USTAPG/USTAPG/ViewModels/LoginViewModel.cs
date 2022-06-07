@@ -486,7 +486,7 @@
     #region Métodos
     public async void ValidarUsuario()
     {
-        MainViewModel.GetIntance().DB = new DataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "full.db3"));
+        MainViewModel.GetIntance().DB = new DataBase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Ultima.db3"));
         var u = await GetUser();
         MainViewModel.GetIntance().U_Usuario = new List<Usuario>();
         if (u.Count > 0)
